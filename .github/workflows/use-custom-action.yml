@@ -1,17 +1,23 @@
-name: Deployment
+# Example of using a custom Composite Action
+
+name: Use Custom Action
 on:
-  push:
-    branches:
-      - main
+  # Allows running this workflow manually from the Actions tab
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v3
+
+        # Use the custom Composite Action
       - name: Load & cache dependencies
         id: cache-deps
-        uses: ./.github/actions/cached-deps
+        uses: ./.github/actions/cached-deps # relative to project root folder, don't have to specify /action.yml
         with:
           caching: 'false'
       - name: Output information
