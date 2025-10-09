@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v5
 
         # Use the custom Composite Action
-      - name: Load & cache dependencies
+      - name: Use the custom Composite Action to load & cache dependencies
         id: cache-deps
         uses: ./.github/actions/cached-deps # relative to project root folder, don't have to specify /action.yml
         with:
