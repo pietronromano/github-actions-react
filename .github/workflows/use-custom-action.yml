@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
         # Use the custom Composite Action
       - name: Load & cache dependencies
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       - name: Load & cache dependencies
         uses: ./.github/actions/cached-deps
       - name: Test code
@@ -36,7 +36,7 @@ jobs:
         run: npm run test
       - name: Upload test report
         if: failure() && steps.run-tests.outcome == 'failure'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: test-report
           path: test.json
@@ -45,13 +45,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       - name: Load & cache dependencies
         uses: ./.github/actions/cached-deps
       - name: Build website
         run: npm run build
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: dist-files
           path: dist
@@ -71,16 +71,18 @@ jobs:
           path: ./dist
       - name: Output contents
         run: ls
-      - name: Deploy site
-        id: deploy
-        uses: ./.github/actions/deploy-s3-docker
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        with:
-          bucket: gha-security-hosting-demo
-          dist-folder: ./dist
-          # bucket-region: us-east-2
-      - name: Output information
-        run: |
-          echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
+
+# DON'T RUN THE S3 CODE ########
+      # - name: Deploy site
+      #   id: deploy
+      #   uses: ./.github/actions/deploy-s3-docker
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   with:
+      #     bucket: gha-security-hosting-demo
+      #     dist-folder: ./dist
+      #     # bucket-region: us-east-2
+      # - name: Output information
+      #   run: |
+      #     echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
