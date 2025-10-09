@@ -1,5 +1,5 @@
 name: 'Get & Cache Dependencies'
-description: 'Get the dependencies (via npm) and cache them.'
+description: 'Composite Action: Get the dependencies (via npm) and cache them.'
 inputs:
   caching:
     description: 'Whether to cache dependencies or not.'
