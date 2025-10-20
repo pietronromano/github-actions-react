@@ -1,3 +1,7 @@
+# NOTE: env variables CANNOT be passed to the called workflow, so have to use literals
+# https://stackoverflow.com/questions/73305126/passing-environment-variables-as-inputs-to-a-reusable-workflow
+# https://github.com/orgs/community/discussions/26671
+
 name: Call Reusable Workflow
 on:
   # Allows running this workflow manually from the Actions tab
